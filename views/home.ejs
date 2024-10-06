@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        #main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        table th,
+        table td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        table th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        table tr:hover {
+            background-color: #ddd;
+        }
+
+        nav {
+            background-color: #007bff;
+            padding: 10px 20px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #navbar h2 {
+            color: white;
+            margin: 0;
+        }
+
+        #navbar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        #navbar li {
+            margin-left: 20px;
+        }
+
+        #navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 12px;
+            transition: background 0.3s;
+        }
+
+        #navbar a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+
+        footer {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            text-align: center;
+        }
+
+        .edit-button {
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .edit-button:hover {
+            background-color: #0056b3;
+        }
+
+        .edit-form {
+            display: none;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div id="navbar">
+            <ul>
+                <li><a href="/home">Books</a></li>
+                <li><a href="/newbooks">Add Book</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div id="main">
+        <h1>All Books</h1>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Genre</th>
+                    <th>Copies</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% books.forEach(book => { %>
+                    <tr id="book-<%= book._id %>">
+                        <td class="book-title"><%= book.title %></td>
+                        <td class="book-author"><%= book.author %></td>
+                        <td class="book-genre"><%= book.genre %></td>
+                        <td class="book-copies"><%= book.copies %></td>
+                        <td>
+                            <button class="edit-button" onclick="showEditForm('<%= book._id %>')">Edit</button>
+                        </td>
+                    </tr>
+                    <tr class="edit-form" id="edit-form-<%= book._id %>">
+                        <td colspan="5">
+                            <form onsubmit="updateBook(event, '<%= book._id %>')">
+                                <label>Title:</label>
+                                <input type="text" name="title" class="edit-title" value="<%= book.title %>" required>
+                                <label>Author:</label>
+                                <input type="text" name="author" class="edit-author" value="<%= book.author %>" required>
+                                <label>Genre:</label>
+                                <input type="text" name="genre" class="edit-genre" value="<%= book.genre %>" required>
+                                <label>Copies:</label>
+                                <input type="number" name="copies" class="edit-copies" value="<%= book.copies %>" required>
+                                <button type="submit" class="update-button">Update</button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+
+    </div>
+
+    <script>
+        function showEditForm(bookId) {
+            const editForm = document.getElementById(`edit-form-${bookId}`);
+            editForm.style.display = editForm.style.display === 'none' || editForm.style.display === '' ? 'table-row' : 'none';
+        }
+
+        async function updateBook(event, bookId) {
+            event.preventDefault();
+            const form = event.target;
+
+            const data = {
+                title: form.title.value,
+                author: form.author.value,
+                genre: form.genre.value,
+                copies: form.copies.value
+            };
+
+            try {
+                const response = await fetch(`/books/${bookId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    window.location.href = '/home';
+                } else {
+                    const error = await response.text();
+                    alert(`Error updating book: ${error}`);
+                }
+            } catch (error) {
+                console.error('Error updating book:', error);
+            }
+        }
+    </script>
+
+</body>
+
+</html>

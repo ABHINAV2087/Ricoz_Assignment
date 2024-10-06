@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <style>
+        html, body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #000;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            margin: 0;
+            width: 100%;
+        }
+
+        form {
+            width: 90%;
+            max-width: 600px;
+            background-color: #333;
+            padding: 20px 100px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        form h1, form p {
+            text-align: center;
+        }
+
+        .container {
+            padding: 16px;
+        }
+
+        input[type=text], input[type=password] {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            background: #f1f1f1;
+        }
+
+        input[type=text]:focus, input[type=password]:focus {
+            background-color: #ddd;
+            outline: none;
+        }
+
+        label {
+            color: #ddd;
+        }
+
+        hr {
+            border: 1px solid #f1f1f1;
+            margin-bottom: 20px;
+        }
+
+        .registerbtn {
+            background-color: #04AA6D;
+            color: white;
+            padding: 16px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 4px;
+        }
+
+        .registerbtn:hover {
+            opacity: 0.9;
+        }
+
+        a {
+            color: dodgerblue;
+        }
+
+        .signin {
+            background-color: #f1f1f1;
+            text-align: center;
+            padding: 10px;
+            border-radius: 4px;
+            width: fit-content;
+            display: flex;
+            justify-content: center;
+        }
+
+        .signin a {
+            color: #04AA6D;
+        }
+
+        #btns {
+            display: flex;
+            flex-direction: column;
+            padding-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<form action="/register" method="post">
+    <div class="container">
+        <h1>Register</h1>
+        <p>Please fill in this form to create an account.</p>
+        <hr>
+
+        <label for="username"><b>Username</b></label>
+        <input type="text" placeholder="Enter Username" name="username" id="username" required>
+
+        <label for="name"><b>Name</b></label>
+        <input type="text" placeholder="Enter Name" name="name" id="name" required>
+
+        <label for="email"><b>Email</b></label>
+        <input type="text" placeholder="Enter Email" name="email" id="email" required>
+
+        <label for="pic"><b>Profile Picture URL</b></label>
+        <input type="text" placeholder="Enter Profile Picture URL" name="pic" id="pic" required>
+
+        <label for="password"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" name="password" id="password" required>
+
+        <div id="btns">
+            <button type="submit" class="registerbtn">Register</button>
+        </div>
+        <div class="signin">
+            <p>Already have an account? <a href="/signin">Sign in</a></p>
+        </div>
+    </div>
+</form>
+
+</body>
+</html>

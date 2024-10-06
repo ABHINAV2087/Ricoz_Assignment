@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        #main {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+        h1 {
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div id="main">
+        <h1>Update Your Details</h1>
+        <form action="/update/<%= user._id %>" method="POST">
+            <div>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" value="<%= user.username %>" required>
+            </div>
+            <div>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" value="<%= user.name %>" required>
+            </div>
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" value="<%= user.email %>" required>
+            </div>
+            <div>
+                <label for="details">About:</label>
+                <textarea id="details" name="details" rows="4" required><%= user.details %></textarea>
+            </div>
+            <div>
+                <label for="pic">Profile Picture URL:</label>
+                <input type="text" id="pic" name="pic" value="<%= user.pic %>" required>
+            </div>
+            <button type="submit">Update Details</button>
+        </form>
+        <a href="/userdetails/<%= user._id %>">Back to Profile</a>
+    </div>
+</body>
+</html>
